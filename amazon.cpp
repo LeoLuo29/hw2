@@ -102,9 +102,29 @@ int main(int argc, char* argv[])
                 done = true;
             }
 	    /* Add support for other commands here */
-
-
-
+            else if ( cmd == "ADD" ) {
+                string username;
+                int hitNum;
+                // hitNum refers to the most recent search results, numbered from 1
+                bool valid = (ss >> username >> hitNum)
+                    && hitNum >= 1 && hitNum <= (int)hits.size()
+                    && ds.addCart(username, hits[hitNum - 1]);
+                if (!valid) {
+                    cout << "Invalid request" << endl;
+                }
+            }
+            else if ( cmd == "VIEWCART" ) {
+                string username;
+                if (!(ss >> username) || !ds.viewCart(username)) {
+                    cout << "Invalid username" << endl;
+                }
+            }
+            else if ( cmd == "BUYCART" ) {
+                string username;
+                if (!(ss >> username) || !ds.buyCart(username)) {
+                    cout << "Invalid username" << endl;
+                }
+            }
 
             else {
                 cout << "Unknown command" << endl;
